@@ -10,10 +10,13 @@ These are the four exemplified Monte Carlo simulations in Figure 4 of [Fieremans
 These are good exercises if you just start your own MC simulation codes.
 Some results can suprise you, even if you are well experienced!!
 
-## Reference:
+## Reference
 Please cite the following reference if you use this code in your study:
 
 Els Fieremans, Hong-Hsi Lee, [Physical and numerical phantoms for the validation of brain microstructural MRI: A cookbook](https://doi.org/10.1016/j.neuroimage.2018.06.046), NeuroImage 2018
 
-## Author:
+## Authors
 Hong-Hsi Lee - [our page](http://www.diffusion-mri.com/people/hong-hsi-lee)
+
+## License
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
