@@ -1,6 +1,6 @@
 # Recipes of Monte Carlo simulations
 
-This is the four exemplified Monte Carlo simulations in Figure 4 of Fieremans and Lee, NI 2018 with more details in Supplmentary Information
+These are the four exemplified Monte Carlo simulations in Figure 4 of [Fieremans and Lee, NI 2018](https://doi.org/10.1016/j.neuroimage.2018.06.046) with more details in Supplmentary Information
 
 * **Example 1 (Figure 4, point 1):** Free diffusion in 2d
 * **Example 2 (Figure 4, point 2):** Check short-time limit of diffusion in randomly packed impermeable cylinders (2d)
