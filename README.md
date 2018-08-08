@@ -19,4 +19,4 @@ Els Fieremans, Hong-Hsi Lee, [Physical and numerical phantoms for the validation
 Hong-Hsi Lee - [our page](http://www.diffusion-mri.com/people/hong-hsi-lee)
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/leehhtw/monte-carlo-simulation-recipes/blob/example1/LICENSE) file for details
