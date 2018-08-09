@@ -1,22 +1,51 @@
-%% diffusivity, kurtosis, multishell b value
-
-load('/Users/magda/Desktop/diffusion_simulation/generate_packing/generate_2d_packings_aboitiz/packing_aboitiz_rho76_g585.mat')
-% load('/Users/magda/Desktop/diffusion_simulation/generate_packing/generate_2d_packings_oneRadius1/oneRadius1.mat')
-root='/Users/magda/Desktop/diffusion_simulation/cpp_practice/diffusion_myelin_exchange_ellipse_propagator_speed_up_v5/diffusion_myelin_exchange/packing_aboitiz_rho76_g585_EAS_kappa0_Dout2_b0.1-10/';
-
-% packing parameter
-root_packing='/Users/magda/Desktop/diffusion_simulation/cpp_practice/packing/packing_aboitiz_rho76_g585';
-
-fileID = fopen(fullfile(root_packing,'phantom_gratio.txt'),'r');
-gratio=str2num(fgetl(fileID));
-fclose(fileID);
-
-fileID = fopen(fullfile(root_packing,'phantom_res.txt'),'r');
-res=str2num(fgetl(fileID));
-fclose(fileID);
 
 
-% simulation parameter
+root = '/Users/magda/Documents/GitHub/monte-carlo-simulation-recipes/example2_short_time_limit';
+
+%% Have a look of the microstructure
+% The lookup table A saves two axon labels in one integer. If the first
+% and the second axon labels are ax1 and ax2, ax1 = mod(A,Nmax), and ax2 =
+% floor(A/Nmax).
+% Other parameters:
+%   voxelSize: voxel size of the look up table A in µm
+%   Nax: # axons
+%   rCir: axon's inner radius
+%   gratio: g-ratio, the ratio of inner to outer radius
+%   [xCir,yCir]: axon's center position
+
+root_packing = fullfile(root,'packing');
+
+A = load(fullfile(root_packing,'phantom_APix.txt')); 
+Nmax = load(fullfile(root_packing,'phantom_Nmax.txt'));
+voxelSize = load(fullfile(root_packing,'phantom_res.txt'));
+
+Nax = load(fullfile(root_packing,'phantom_NAx.txt'));
+gratio = load(fullfile(root_packing,'phantom_gratio.txt')); 
+rCir = load(fullfile(root_packing,'phantom_rCir.txt'));
+xCir = load(fullfile(root_packing,'phantom_xCir.txt'));
+yCir = load(fullfile(root_packing,'phantom_yCir.txt'));
+
+% Plot the microstructure and the lookup table
+figure;
+subplot(121);
+for i = -1:1
+    for j = -1:1
+        viscircles([xCir(:)+i,yCir(:)+j],rCir(:));
+    end
+end
+xlim([0 1]); ylim([0 1])
+pbaspect([1 1 1]); box on
+title('Axon Packing','interpreter','latex','fontsize',20)
+set(gca,'xtick',[],'ytick',[])
+
+subplot(122);
+imagesc(rot90(A),[0,Nax]);
+pbaspect([1 1 1]); axis off
+title('Lookup table','interpreter','latex','fontsize',20)
+
+set(gcf,'unit','inch','position',[0 0 12 5])
+
+%% simulation parameter
 
 clear tline C
 fileID = fopen(fullfile(root,'sim_para'),'r');
