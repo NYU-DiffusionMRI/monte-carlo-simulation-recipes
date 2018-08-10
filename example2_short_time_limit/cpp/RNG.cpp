@@ -2,14 +2,13 @@
 //  RNG.cpp
 //  practice
 //
-//  Created by magda on 2/16/17.
-//  Copyright (c) 2017 Honghsi. All rights reserved.
+//  Created by Hong-Hsi Lee on 2/16/17.
+//  Copyright (c) 2017 Hong-Hsi Lee. All rights reserved.
 //
 
 #include "RNG.h"
 #include <iostream>
 #include <stdio.h>
-//#include <random>
 
 using namespace std;
 
@@ -46,7 +45,7 @@ RNGvalues init_KISS()
     
 	x=devrand();
 	while (!(y=devrand())){} /* y must not be zero! */ z = devrand();
-	/* We don’t really need to set c as well but let's anyway... */
+	/* We do not really need to set c as well but let's anyway... */
 	/* NOTE: offset c by 1 to avoid z=c=0 */
 	c = devrand() % 698769068 + 1; /* Should be less than 698769069 */
     
@@ -75,26 +74,3 @@ RNGvalues JKISS(RNGvalues v){
 }
 
 /***********************RANDOM NUMBER GENERATOR (KISS) END ******************************/
-
-
-/********** Mersenne Twister RNG *********/
-/*
-RNGvalues init_randMT () {
-    RNGvalues v;
-    v.x=0; v.y=0; v.z=0; v.c=0;
-    v.r=0;
-    return v;
-}
-
-RNGvalues randMT (RNGvalues v) {
-    mt19937 generator (v.x);
-    uniform_real_distribution<double> dis(0.0, 1.0);
-    v.r=dis(generator);
-    return v;
-}
-*/
-
-
-
-
-

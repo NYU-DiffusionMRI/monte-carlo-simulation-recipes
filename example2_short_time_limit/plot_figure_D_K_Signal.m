@@ -1,5 +1,12 @@
+% Els Fieremans, Hong-Hsi Lee, Physical and numerical phantoms for the
+% validation of brain microstructural MRI: A cookbook, NeuroImage 2018
+%
+% Supplementary Information: Recipes of MC simulations in Figure 4
+%
+% Example 2: Check short-time limit: Diffusion in extra-cylindrical space
+%   of randomly packed impermeable cylinders in 2d
 
-
+% Setup the directory on your computer
 root = '/Users/magda/Documents/GitHub/monte-carlo-simulation-recipes/example2_short_time_limit';
 
 %% Have a look of the microstructure
@@ -7,7 +14,7 @@ root = '/Users/magda/Documents/GitHub/monte-carlo-simulation-recipes/example2_sh
 % and the second axon labels are ax1 and ax2, ax1 = mod(A,Nmax), and ax2 =
 % floor(A/Nmax).
 % Other parameters:
-%   voxelSize: voxel size of the look up table A in µm
+%   voxelSize: voxel size of the lookup table A in µm
 %   Nax: # axons
 %   rCir: axon's inner radius
 %   gratio: g-ratio, the ratio of inner to outer radius
@@ -25,8 +32,9 @@ rCir = load(fullfile(root_packing,'phantom_rCir.txt'));
 xCir = load(fullfile(root_packing,'phantom_xCir.txt'));
 yCir = load(fullfile(root_packing,'phantom_yCir.txt'));
 
-% Plot the microstructure and the lookup table
-figure;
+%% Plot the microstructure and the lookup table
+% Plot the microstructure
+figure; set(gcf,'unit','inch','position',[0 0 12 5])
 subplot(121);
 for i = -1:1
     for j = -1:1
@@ -38,12 +46,31 @@ pbaspect([1 1 1]); box on
 title('Axon Packing','interpreter','latex','fontsize',20)
 set(gca,'xtick',[],'ytick',[])
 
+% Plot the lookup table
 subplot(122);
-imagesc(rot90(A),[0,Nax]);
-pbaspect([1 1 1]); axis off
-title('Lookup table','interpreter','latex','fontsize',20)
+cmap = colormap('parula');
+Ibg = A==0;                     % background region
+Iol = A>Nax;                    % two-axon region
+A2 = ceil(single(A)/Nax*64);    % rescale the colormap for # axons
+A2(Ibg) = 1;
+A2(Iol) = 1;
+[nx,ny] = size(A2);
+imgc = cmap(uint16(A2(:)),:);
+imgc(Ibg,:) = 0;                % background region is black
+imgc(Iol,:) = 1;                % two-axon region is white
+imgc = reshape(imgc,[nx,ny,3]);
 
-set(gcf,'unit','inch','position',[0 0 12 5])
+image(rot90(imgc)); caxis([0 Nax]);
+box on; axis off
+title('Lookup Table','interpreter','latex','fontsize',20)
+
+%% Run the simulation in the extra-cylindrical space in 2d
+% Parameters are defined in the cpp file main.cpp
+% Intrinsic diffusivity = 2 µm2/m2
+% Time for each step = 3.5e-5
+% # Steps = 2e4
+% # Particles = 5e4
+
 
 %% simulation parameter
 

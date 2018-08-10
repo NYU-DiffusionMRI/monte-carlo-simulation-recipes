@@ -2,15 +2,14 @@
 //  RNG.h
 //  practice
 //
-//  Created by magda on 2/16/17.
-//  Copyright (c) 2017 Honghsi. All rights reserved.
+//  Created by Hong-Hsi Lee on 2/16/17.
+//  Copyright (c) 2017 Hong-Hsi Lee. All rights reserved.
 //
 
 #ifndef __practice__RNG__
 #define __practice__RNG__
 
 #include <iostream>
-//#include <random>
 
 //Define structure used in RNG
 struct RNGvalues
