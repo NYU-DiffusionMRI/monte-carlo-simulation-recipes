@@ -2,7 +2,7 @@
 
 These are the four exemplified Monte Carlo simulations in Figure 4 of [Fieremans and Lee, NeuroImage 2018](https://doi.org/10.1016/j.neuroimage.2018.06.046) with more details in Supplmentary Information
 
-**Aug 7th, 2018: Update Example 1, three others to go**
+**Sept 18th, 2018: Update Example 2, only two more left**
 
 * **Example 1 (Figure 4, point 1):** Free diffusion in 2d
 * **Example 2 (Figure 4, point 2):** Check short-time limit of diffusion in randomly packed impermeable cylinders (2d)
