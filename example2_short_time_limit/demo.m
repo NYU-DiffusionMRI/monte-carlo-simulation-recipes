@@ -7,8 +7,7 @@
 %   of randomly packed impermeable cylinders in 2d
 
 % ********** Setup the directory on your computer **********
-% root = 'your_directory_to_this_demo/example2_short_time_limit';
-root = '/Users/magda/Documents/GitHub/monte-carlo-simulation-recipes/example2_short_time_limit';
+root = 'your_directory_to_this_demo/example2_short_time_limit';
 
 % Create files for simualtion
 % 1. packing directory
