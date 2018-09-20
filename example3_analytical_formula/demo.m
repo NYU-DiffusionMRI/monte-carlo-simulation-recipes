@@ -3,11 +3,11 @@
 %
 % Supplementary Information: Recipes of MC simulations in Figure 4
 %
-% Example 2: Check short-time limit: Diffusion in extra-cylindrical space
-%   of randomly packed impermeable cylinders in 2d
+% Example 3: Check against known analytical formulas for impermeable
+% (non-)absorbing membranes
 
 % ********** Setup the directory on your computer **********
-root = 'your_directory_to_this_demo/example2_short_time_limit';
+root = 'your_directory_to_this_demo/example3_analytical_formula';
 
 % Create files for simualtion
 % 1. packing directory
@@ -17,7 +17,7 @@ fprintf(fileID,root_packing);
 fclose(fileID);
 
 % 2. Simulation parameters
-dt = 3.5e-5;  % time of each step, ms
+dt = 7.5e-5;  % time of each step, ms
 TN = 2e4;   % # steps
 Din = 2;    % IAS diffusivity, µm^2/ms
 Dout = 2;   % EAS diffusivity, µm^2/ms
@@ -57,7 +57,7 @@ figure; set(gcf,'unit','inch','position',[0 0 12 5])
 subplot(121);
 for i = -1:1
     for j = -1:1
-        viscircles([xCir(:)+i,yCir(:)+j],rCir(:));
+        viscircles([xCir(:)+i,yCir(:)+j],rCir(:)*gratio);
     end
 end
 xlim([0 1]); ylim([0 1])
@@ -83,7 +83,7 @@ image(rot90(imgc)); caxis([0 Nax]);
 box on; axis off
 title('Lookup Table','interpreter','latex','fontsize',20)
 
-%% Run the simulation in the extra-cylindrical space in 2d
+%% Run the simulation in the intra-cylindrical space in 2d
 % Parameters are defined in the 'simParamInput.txt', and the # particle is
 % defined in main.cpp, line 50.
 cd(fullfile(root,'cpp'))
@@ -131,42 +131,42 @@ Kx = dx4./dx2.^2 - 3;
 Ky = dy4./dy2.^2 - 3;
 RK = (Kx+Ky)/2;
 
-%% Plot short-time limit for randomly packed impermeable cylinders (2d)
-%  Particles diffuse in extra-axonal space only.
+%% Plot time-dependence inside the non-absorbing impermeable cylinder (2d)
+%  Particles diffuse in intra-axonal space only.
+
+% inner radius
+rin = rCir(1)*gratio*fov;
+
+% Analytical solution of RD and RK inside a cylinder
+addpath(fullfile(root,'lib'))
+[RD_theory,RK_theory] = cylinderDK(rin,Din,t,200);
 
 figure; set(gcf,'unit','inch','position',[1 1 14 7])
 subplot(121)
 hold on
-h = plot(sqrt(t),RD/Dout,'-'); axis square
-set(h,'linewidth',3)
+h = plot(t,RD/Din,'-');
+axis square; grid on
+set(h,'linewidth',4)
+h_theory = plot(t,RD_theory/Din,'--r');
+set(h_theory,'linewidth',3);
+legend([h,h_theory],{'Simulation','Exact'},'interpreter','latex','fontsize',30)
 
-% calculate surface S, volume V, surfave-to-volume ratio SoV
-S = fov*2*pi*sum(rCir);
-V = fov^2*(1-pi*sum(rCir.^2));
-SoV= S/V;
-D_theory = Dout*(1-SoV/2*(4/3)*sqrt(Dout*t)/sqrt(pi));
-K_theory = (3/8)*(8/5)*SoV*sqrt(Dout*t)/sqrt(pi);
-
-h_theory = plot(sqrt(t),D_theory/Dout,'--r'); set(h_theory,'linewidth',2);
-legend([h,h_theory],{'Simulation','Mitra Limit'},'interpreter','latex','fontsize',30,'location','southwest')
-
-set(gca,'xtick',0:0.05:1,'ytick',0:0.5:1,'fontsize',20);
-xlim([0 0.3]); 
-ylim([0 1.25]); box on; grid on
-xlabel('$\sqrt{t}$ (ms$^{1/2}$)','interpreter','latex','fontsize',30);
+xlim([0 max(t)]); ylim([0 1.2]); box on;
+set(gca,'fontsize',20,'ytick',0:0.5:2)
+xlabel('$t$ (ms)','interpreter','latex','fontsize',30);
 ylabel('$D(t)/D_0$','interpreter','latex','fontsize',30);
 
-subplot(122);
+subplot(122)
 hold on
-h = plot(sqrt(t),RK,'-'); axis square
-set(h,'linewidth',3)
-h_theory = plot(sqrt(t),K_theory,'--r');
-set(h_theory,'linewidth',2);
-hl = refline(0,0); set(hl,'color','k')
-legend([h,h_theory],{'Simulation','Mitra limit'},'interpreter','latex','fontsize',30,'location','southeast')
+h=plot(t,RK,'-'); axis square
+hr = refline(0,0); set(hr,'color','k')
+set(h,'linewidth',4,'markerfacecolor',[0 0 1])
+h_theory=plot(t,RK_theory,'--r');
+set(h_theory,'linewidth',3);
 
-set(gca,'xtick',0:0.05:1,'ytick',-2:0.5:1,'fontsize',20);
-xlim([0 0.3]); 
-ylim([-2 1]); box on; grid on
-xlabel('$\sqrt{t}$ (ms$^{1/2}$)','interpreter','latex','fontsize',30);
+legend([h,h_theory],{'Simulation','Exact'},'interpreter','latex','fontsize',30,'location','southeast')
+
+set(gca,'fontsize',20,'ytick',-2:0.5:2); grid on
+xlim([0 sqrt(max(t))]); ylim([-2 0.5]); box on;
+xlabel('$t$ (ms)','interpreter','latex','fontsize',30);
 ylabel('$K(t)$','interpreter','latex','fontsize',30);

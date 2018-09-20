@@ -151,7 +151,7 @@
         myfile9>>gratio;
         myfile9.close();
         
-        //********** Initialize Particle Positions in EAS *********
+        //********** Initialize Particle Positions in IAS *********
         const double probOUT=Pi/4*res*kappa/Dout;       // Probability constant from EAS to myelin
         const double probIN=Pi/4*res*kappa/Din;         // Probability constant from IAS to myelin
         const double probMY=Pi/4*res*kappa/Dmr;         // Probability constant from myelin to IAS/EAS
@@ -181,20 +181,20 @@
             a=APix[xyParG[0]][xyParG[1]];
             ax1=a%Nmax; ax2=a/Nmax;
             
-            // If the particle is in EAS, take the initial position
+            // If the particle is in IAS, take the initial position
             instruction1=false; instruction2=false;
             if ( ax1 ){
                 xyCir[0]=xCir[ax1-1]; xyCir[1]=yCir[ax1-1];
-                instruction1 = inAxon(xyPar, xyCir, rCir[ax1-1]);
+                instruction1 = inIAS(xyPar, xyCir, rCir[ax1-1],gratio);
             }
             
             if ( ax2 ){
                 xyCir[0]=xCir[ax2-1]; xyCir[1]=yCir[ax2-1];
-                instruction2 = inAxon(xyPar, xyCir, rCir[ax2-1]);
+                instruction2 = inIAS(xyPar, xyCir, rCir[ax2-1],gratio);
             }
             
-            //if ( instruction1==true | instruction2==true ){
-            if ( instruction1==false & instruction2==false ){
+            if ( instruction1==true | instruction2==true ){
+            //if ( instruction1==false & instruction2==false ){
                 xiPar[k]=xRand; yiPar[k]=yRand; ziPar[k]=zRand;
                 k++;
             }
