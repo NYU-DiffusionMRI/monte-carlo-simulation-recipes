@@ -5,7 +5,7 @@ These are the four exemplified Monte Carlo simulations in Figure 4 of [Fieremans
 **Sept 20th, 2018: Update Analytical solution**
 
 * **Example 1 (Figure 4, point 1):** Free diffusion in 2d
-* **Example 2 (Figure 4, point 2):** Check short-time limit of diffusion in randomly packed impermeable cylinders (2d)
+* **Example 2 (Figure 4, point 2):** Check short-time limit of diffusion in a geometry composed of randomly packed impermeable cylinders (2d)
 * **Example 3 (Figure 4, point 3):** Check against analytical formulas for diffusion within an impermeable non-absorbing cylinder (2d)
 * **Example 4-5 (Figure 4, point 5):** Calculate membrane's permeability by starting diffusing particles from the center of a permeable cylinder (2d)
 * **Analytical solution** of time-dependent diffisivity and kurtosis between parallel planes, inside cylinders, and inside spheres.
