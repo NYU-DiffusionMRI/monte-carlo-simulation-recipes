@@ -7,6 +7,7 @@
 
 % ********** Setup the directory on your computer **********
 root = 'your_directory_to_this_demo/example4-5_permeable_membrane';
+% root = pwd;
 
 % Create files for simualtion
 % 1. packing directory
