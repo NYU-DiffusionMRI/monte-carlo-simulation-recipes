@@ -1,2 +1,0 @@
-#!/bin/bash
-g++ -O3 -ffast-math -o spheres neighbor.C spheres.C box.C sphere.C event.C heap.C read_input.C
