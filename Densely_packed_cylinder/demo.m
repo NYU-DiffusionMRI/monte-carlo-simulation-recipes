@@ -7,7 +7,7 @@
 % (Aboitiz, et al., Brain Research, 1992, 598:143-153)
 %
 % The fiber packing algorithm is Donev's work in (Donev, et al., J. Comput.
-% Phys., 2005, 202:737?764)
+% Phys., 2005, 202:737-764)
 %
 % ATTENTION: The value of cylindrical volume fraction can be slightly
 % different from the input. The actual value needs to be recalcualted based
@@ -26,7 +26,7 @@ hardwallBC = 0;     % boundary condition, 0 for periodic, 1 for hard wall
 shrinkFactor = 1;   % shrinkage factor, usually > 1
                     % diameter = (diameter in histology)*shrinkfactor
 
-% load axonal diameter histogram in corpus callosum
+% load inner axonal diameter histogram in corpus callosum
 load(fullfile(root,'diameter_histogram','CC_diameter_histogram.mat'));
 
 % use the histogram in genu of the corpus callosum, roi = 1
