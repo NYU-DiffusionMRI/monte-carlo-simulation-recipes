@@ -27,7 +27,7 @@ for i = 1:numel(filenames)
     xlim([0 9]); ylim([0 30])
     box on; pbaspect([2 1 1])
     set(gca,'xtick',0:9,'ytick',0:5:30);
-    if i == 5, xlabel('Diameter (µm)','fontsize',16); end
+    if i == 5, xlabel('Inner Diameter (µm)','fontsize',16); end
     if i == 3, ylabel('Frequency (%)','fontsize',16); end
 end
 

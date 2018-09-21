@@ -43,7 +43,7 @@ for bin = 1:length(ct)
   i = i+ct(bin);
 end
 
-% plot diameter histogram
+% plot inner diameter histogram
 edges = (0:0.2:9)*shrinkFactor;
 Nc = histcounts(2*rinit,edges);
 bar(edges(2:end),Nc/N*100,1);
@@ -51,7 +51,7 @@ xlim([0 9]); ylim([0 30])
 box on; pbaspect([2 1 1])
 set(gca,'xtick',0:9,'ytick',0:5:30,'fontsize',12)
 title([cc(roi).name,sprintf(', shrinkage factor = %.2f',shrinkFactor)],'fontsize',20)
-xlabel('Diameter (µm)','fontsize',16)
+xlabel('Inner Diameter (µm)','fontsize',16)
 ylabel('Frequency (%)','fontsize',16)
 
 %% initialization and generate read.dat for Donev's C++ code
