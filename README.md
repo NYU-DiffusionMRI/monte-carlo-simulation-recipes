@@ -17,16 +17,13 @@ Some results can suprise you, even if you are well experienced!!
 
 ## Reference
 * Please cite the following reference if you use this code in your study:
-
-Els Fieremans, Hong-Hsi Lee, [Physical and numerical phantoms for the validation of brain microstructural MRI: A cookbook](https://doi.org/10.1016/j.neuroimage.2018.06.046), NeuroImage 2018
+- Els Fieremans, Hong-Hsi Lee, [Physical and numerical phantoms for the validation of brain microstructural MRI: A cookbook](https://doi.org/10.1016/j.neuroimage.2018.06.046), NeuroImage 2018
 
 * If you use this code to generate your own packing geometry, please also cite:
-
-Aleksandar Donev, Salvatore Torquato, Frank H. Stillinger, [Neighbor list collision-driven molecular dynamics simulation for nonspherical hard particles. I. Algorithmic details](https://doi.org/10.1016/j.jcp.2004.08.014), Journal of Computational Physics 2005
+- Aleksandar Donev, Salvatore Torquato, Frank H. Stillinger, [Neighbor list collision-driven molecular dynamics simulation for nonspherical hard particles. I. Algorithmic details](https://doi.org/10.1016/j.jcp.2004.08.014), Journal of Computational Physics 2005
 
 * If you use the axonal diameter histogram of corpus callosum in this code, pleas also cite:
-
-Francisco Aboitiz, Arnold B. Scheibel, Robin S. Fisher, Eran Zaidel, [Fiber composition of the human corpus callosum](https://doi.org/10.1016/0006-8993(92)90178-C), Brain Research 1992
+- Francisco Aboitiz, Arnold B. Scheibel, Robin S. Fisher, Eran Zaidel, [Fiber composition of the human corpus callosum](https://doi.org/10.1016/0006-8993(92)90178-C), Brain Research 1992
 
 ## Authors
 Hong-Hsi Lee - [our page](http://www.diffusion-mri.com/people/hong-hsi-lee)
