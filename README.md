@@ -15,14 +15,14 @@ These are the four exemplified Monte Carlo simulations in Figure 4 of [Fieremans
 These are good exercises if you just start your own MC simulation codes.
 Some results can suprise you, even if you are well experienced!!
 
-## Reference
-1. Please cite the following reference if you use this code in your study:
+## References
+1. If you use this code in your study, please cite:
 Els Fieremans, Hong-Hsi Lee, [Physical and numerical phantoms for the validation of brain microstructural MRI: A cookbook](https://doi.org/10.1016/j.neuroimage.2018.06.046), NeuroImage 2018
 
-2. If you use this code to generate your own packing geometry, please also cite:
+2. If you use this code to generate your own packing geometry, please **also** cite:
 Aleksandar Donev, Salvatore Torquato, Frank H. Stillinger, [Neighbor list collision-driven molecular dynamics simulation for nonspherical hard particles. I. Algorithmic details](https://doi.org/10.1016/j.jcp.2004.08.014), Journal of Computational Physics 2005
 
-3. If you use the axonal diameter histogram of corpus callosum in this code, pleas also cite:
+3. If you use the axonal diameter histogram of corpus callosum in this code, pleas **also** cite:
 Francisco Aboitiz, Arnold B. Scheibel, Robin S. Fisher, Eran Zaidel, [Fiber composition of the human corpus callosum](https://doi.org/10.1016/0006-8993(92)90178-C), Brain Research 1992
 
 ## Authors
