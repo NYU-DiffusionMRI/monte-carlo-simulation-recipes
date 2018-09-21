@@ -1,140 +1,90 @@
-% initialize positions, run Donev's code and show the results
+% Els Fieremans, Hong-Hsi Lee, Physical and numerical phantoms for the
+% validation of brain microstructural MRI: A cookbook, NeuroImage 2018
+%
+% Randomly packed cylinders in Figure 4
+%
+% The axonal diameter histogram in corpus callosum is based on Fig. 4 in
+% (Aboitiz, et al., Brain Research, 1992, 598:143-153)
+%
+% The fiber packing algorithm is Donev's work in (Donev, et al., J. Comput.
+% Phys., 2005, 202:737?764)
+%
+% ATTENTION: The value of cylindrical volume fraction can be slightly
+% different from the input. The actual value needs to be recalcualted based
+% on the output packing.
 
-more off; format long; format compact
+% ********** Setup the directory on your computer **********
+root = 'your_directory_to_this_demo/Densely_packed_cylinder';
+% root = pwd;
+target = fullfile(root,'packing'); mkdir(target)
 
-maxdensity = 0.60;
-gratio_min = 0.60;
-hardwallBC = 0;   % 0 for periodic, 1 for hard wall boundary conditions
-shrink_Fac = 1.5;
+% input parameters of your packing
+maxdensity = 0.76;  % maximal cylindrical volume fraction
+                    % cylindrical volume fraction = sum(pi*outer_radius.^2)/fov^2
+gratio = 0.585;     % g-ratio, ratio of inner to outer diameter
+hardwallBC = 0;     % boundary condition, 0 for periodic, 1 for hard wall
+shrinkFactor = 1;   % shrinkage factor, usually > 1
+                    % diameter = (diameter in histology)*shrinkfactor
 
-if 1
-    cd '/Users/magda/Desktop/diffusion_simulation/generate_packing/axon_radius_histogram/aboitiz_human_cc/'
-    load cc_hist
-    
-    pct = cc(1).hi;
-    r = cc(1).di/2*shrink_Fac;
-    N = 500;
-    n = floor(N.*pct);
-    N = sum(n);
-    rinit = zeros(N,1);
-    i = 0;
-    Nbins = length(n); 
-   for bin=1:Nbins
-      rinit(i+1:i+n(bin))=r(bin);
-      i=i+n(bin);
-   end
-    cd ('/Users/magda/Desktop/diffusion_simulation/generate_packing/generate_2d_packings_aboitiz')
+% load axonal diameter histogram in corpus callosum
+load(fullfile(root,'diameter_histogram','CC_diameter_histogram.mat'));
+
+% use the histogram in genu of the corpus callosum, roi = 1
+roi = 1;
+N = 500;                                % # axon
+pct = cc(roi).frequency;                % frequency, count in percentage
+ri = cc(roi).diameter/2*shrinkFactor;   % inner radius
+ct = floor(N.*pct);                     % actual count
+N = sum(ct);                            % # axon, recalculated
+rinit = zeros(N,1);                     % initialize inner radius for packing
+i = 0;
+for bin = 1:length(ct)
+  rinit(i+1:i+ct(bin)) = ri(bin);
+  i = i+ct(bin);
 end
 
-% if 0
-%     cd '/Users/lauren/Documents/simdata/Simbrain/Lamantia distributions/'
-%     load hist_sec2
-%     
-%     pct = perc_sec2;
-%     r = d./2;
-%     N = 9999;
-%     n = N.*pct;
-%     rinit = zeros(N,1);
-%     i = 0;
-%     Nbins = length(n); 
-%    for bin=1:Nbins
-%       rinit(i+1:i+n(bin))=r(bin);
-%       i=i+n(bin);
-%    end;
-%     cd ('/Users/lauren/Documents/generate_2d_packings')
-% end
-% 
-% if 0
-%     cd '/Users/lauren/Documents/simdata/Sciatic'
-%     load hist_sciatic
-%     
-%     pct = perc_sciatic;
-%     r = d./2;
-%     N = 9999;
-%     n = N.*pct;
-%     rinit = zeros(N,1);
-%     i = 0;
-%     Nbins = length(n); 
-%    for bin=1:Nbins
-%       rinit(i+1:i+n(bin))=r(bin);
-%       i=i+n(bin);
-%    end;
-%     cd ('/Users/lauren/Documents/generate_2d_packings')
-% end
-    
+% plot diameter histogram
+edges = (0:0.2:9)*shrinkFactor;
+Nc = histcounts(2*rinit,edges);
+bar(edges(2:end),Nc/N*100,1);
+xlim([0 9]); ylim([0 30])
+box on; pbaspect([2 1 1])
+set(gca,'xtick',0:9,'ytick',0:5:30,'fontsize',12)
+title([cc(roi).name,sprintf(', shrinkage factor = %.2f',shrinkFactor)],'fontsize',20)
+xlabel('Diameter (µm)','fontsize',16)
+ylabel('Frequency (%)','fontsize',16)
 
+%% initialization and generate read.dat for Donev's C++ code
+% initial outer radius
+rinit = rinit./gratio;
 
-%% generate read.dat for C++
+% initial position and rescaled outer radius
+[xinit, yinit, rs] = initposition(rinit);
 
-% % continuous distribution from ISMRM 2012
-% if 0 
-%    load('ISMRMpacking.mat');
-%    N=sum(n); Nbins=length(n);
-%    rinit=zeros(N,1);
-%    i=0;
-%    for bin=1:Nbins
-%       rinit(i+1:i+n(bin))=r(bin);
-%       i=i+n(bin);
-%    end;
-% end;
-% 
-% % a truly bimodal distribution
-% if 0
-%    N=9999; % total # of disks
-%    xi=0.6; % ratio of area of large disks to small disks
-%    rS=0.5; rL=2;
-%    % xi = NL*rL^2/(NS*rS^2); NL/NS=xi*(rS/rL)^2; NL+NS=N;
-%    NL=N*xi*(rS/rL)^2/(1+xi*(rS/rL)^2);
-%    NL=round(NL);
-%    rinit=rS*ones(N,1);
-%    rinit(1:NL)=rL; 
-%    Nbins=100; % for further histogram of radii
-% end;
-% 
-% %unimodal distribution
-% if 0
-%     n = 9999;
-%     r = 0.5;
-%    N=sum(n); Nbins=length(n);
-%    rinit=zeros(N,1);
-%    i=0;
-%    for bin=1:Nbins
-%       rinit(i+1:i+n(bin))=r(bin);
-%       i=i+n(bin);
-%    end;
-% end
+% show initial configuration
+figure
+viscircles([xinit,yinit],rs,'linewidth',1);
+box on; grid on; pbaspect([1 1 1])
+xlim([0 1]); ylim([0 1])
+set(gca,'xtick',[],'ytick',[])
 
-rinit = rinit./gratio_min;
-
-[xinit, yinit, rs] = init_positions(rinit);
-
-
-%% show initial configuration
-if 1
-   figure; hold on; grid on; axis square; axis equal;
-   theta=0:0.01:2*pi; ct=cos(theta); st=sin(theta);
-   for i=1:N, plot(xinit(i)+rs(i)*ct,yinit(i)+rs(i)*st,'b-'); end
-   
-   figure; hist(rinit,Nbins);
-end
-
-
-%% prepare input file for C++
+% prepare input file for C++
 C = cell(1,15);
-inpfile0 = fopen('spheres_poly/input','r');
-for k=1:15, C{k}=fgetl(inpfile0); end
-fclose(inpfile0);
+fid = fopen(fullfile(root,'spheres_poly/input'),'r');
+for k = 1:15, C{k} = fgetl(fid); end
+fclose(fid);
+
 % change N and maxpf variables in inputN file 
 C{2}=['int N = ' num2str(N) ';                        // number of spheres'];
 C{4}=['double maxpf = ' num2str(maxdensity) ';                  // max packing fraction'];
 C{12}=['int hardwallBC = ' num2str(hardwallBC) ';                   // 0 for periodic, 1 for hard wall BC'];
-inpfile = fopen('spheres_poly/inputN', 'w');
-fprintf(inpfile, '%s\n', C{:});
-fclose(inpfile);
+fid = fopen(fullfile(root,'spheres_poly/inputN'), 'w');
+fprintf(fid, '%s\n', C{:});
+fclose(fid);
 
 
-%% compile and run C++
-cd spheres_poly
+%% compile and run Donev's C++ code
+cd(fullfile(root,'spheres_poly'))
 disp('compiling .............');
 system('g++ -O3 -ffast-math -o spheres neighbor.C spheres.C box.C sphere.C event.C heap.C read_input.C');
 disp('running C++ ...........');
@@ -143,205 +93,109 @@ system('./spheres inputN'); % run
 toc
 cd ..
 
+%% Save final packing
+% read final packing
+outputfilename = fullfile(root,'spheres_poly/write.dat');
+M = dlmread(outputfilename,'',6,0);
+xc = M(:,1); yc = M(:,2); rc = M(:,3)/2;
 
-%% show final packing
-outputfilename='spheres_poly/write.dat';
-Min=dlmread(outputfilename,'',6,0); M=Min;
-% M=Min(8:end,:);
-x=M(:,1); y=M(:,2); r=M(:,3)/2;
-if 1
-   figure; hold on; grid on; axis square; axis equal;
-   theta=0:0.01:2*pi; ct=cos(theta); st=sin(theta);
-   for i=1:N, plot(x(i)+r(i)*ct,y(i)+r(i)*st,'b-'); end
-   
-   figure; hist(r,Nbins);
-end
+% calculate fov in µm
+res = sum(ri/gratio.*pct)/mean(rc);
 
-target = '/Users/magda/Desktop/diffusion_simulation/generate_packing/axon_radius_histogram/aboitiz_human_cc/';
-load(fullfile(target,'cc_hist.mat'))
-di = cc.di;
-ri = di/2*shrink_Fac;
-hi = cc.hi;
-res = sum(ri/gratio_min.*hi)/sum(hi)/mean(r);
+% save packing
+save(fullfile(target,'packing_parameter.mat'),'xc','yc','rc','gratio','res')
 
-save(['packing_aboitiz_rho' num2str(max_density*100) '_g' num2str(gratio_min*100) '.mat'], 'x', 'y', 'r','gratio_min','res');
+% report cylindrical volume fracion and intra-axonal volume fraction
+fprintf('Cylindrical volume fraction = %.4f\n',sum(pi*rc.^2))
+fprintf('Intra-axonal volume fraction = %.4f\n',sum(pi*(rc*gratio).^2));
 
-%% Pixelize the packing
+%% Create lookup table
+% load packing parameter
+load(fullfile(target,'packing_parameter.mat'))
 
-load(['/Users/magda/Desktop/diffusion_simulation/generate_packing/generate_2d_packings_aboitiz/packing_aboitiz_rho'...
-    num2str(max_density*100) '_g' num2str(gratio_min*100) '.mat'])
-Np = 1000; % Pixel # along each side
-[A,B,NPix,Nmax] = PixelizeGeometry_HHL_v2(Np,x,y,r);
-figure; imagesc(A,[0 Nmax]); axis equal; box on; axis off
-figure; viscircles([y,-x],r,'linewidth',0.5); axis equal; xlim([0 1]); ylim([-1 0]); box on; axis off
+% create lookup table
+n = 1000; % size of the lookup table = n x n
+[A,B,Nmax] = createlookuptable(n,xc,yc,rc);
 
-save(['/Users/magda/Desktop/diffusion_simulation/generate_packing/generate_2d_packings_aboitiz/PixGeo_aboitiz_rho'...
-    num2str(max_density*100) '_g' num2str(gratio_min*100) '.mat'],'A','NPix','Nmax')
+% save lookup table
+save(fullfile(target,'lookup_table.mat'),'A','n','Nmax')
 
-%% Save files for  c++ code
+%% Plot packing and lookup table
+load(fullfile(target,'packing_parameter.mat'))
+load(fullfile(target,'lookup_table.mat'))
 
-target = ['/Users/magda/Desktop/diffusion_simulation/cpp_practice/packing/packing_aboitiz_rho'...
-    num2str(max_density*100) '_g' num2str(gratio_min*100) '_shrinkFac' num2str(shrink_Fac)];
-mkdir(target)
-
-fileID = fopen(fullfile(target,'phantom_res.txt'),'w');
-fprintf(fileID,'%f',res);
-fclose(fileID);
-
-load(['/Users/magda/Desktop/diffusion_simulation/generate_packing/generate_2d_packings_aboitiz/PixGeo_aboitiz_rho'...
-    num2str(max_density*100) '_g' num2str(gratio_min*100) '.mat'])
-fileID = fopen(fullfile(target,'phantom_NPix.txt'),'w');
-fprintf(fileID,'%u',NPix);
-fclose(fileID);
-
-fileID = fopen(fullfile(target,'phantom_APix.txt'),'w');
-for i = 1:size(A,1)
-    fprintf(fileID,'%u ',A(i,:));
-    fprintf(fileID,'\n');
-end
-fclose(fileID);
-
-load(['packing_aboitiz_rho' num2str(max_density*100) '_g' num2str(gratio_min*100) '.mat'])
-fileID = fopen(fullfile(target,'phantom_NAx.txt'),'w');
-fprintf(fileID,'%u',length(r));
-fclose(fileID);
-
-fileID = fopen(fullfile(target,'phantom_xCir.txt'),'w');
-fprintf(fileID,'%f ',x);
-fclose(fileID);
-
-fileID = fopen(fullfile(target,'phantom_yCir.txt'),'w');
-fprintf(fileID,'%f ',y);
-fclose(fileID);
-
-fileID = fopen(fullfile(target,'phantom_rCir.txt'),'w');
-fprintf(fileID,'%f ',r);
-fclose(fileID);
-
-fileID = fopen(fullfile(target,'phantom_Nmax.txt'),'w');
-fprintf(fileID,'%u',Nmax);
-fclose(fileID);
-
-fileID = fopen(fullfile(target,'phantom_gratio.txt'),'w');
-fprintf(fileID,'%f ',gratio_min);
-fclose(fileID);
-
-%%
-
-a=[1 2 3;4 5 6];
-fileID = fopen(fullfile(target,'test.txt'),'w');
-for i = 1:size(a,1)
-    fprintf(fileID, '%u ', a(i,:));
-    fprintf(fileID, '\n');
-end
-fclose(fileID);
-
-%%
-
-root='/Users/magda/Desktop/diffusion_simulation/cpp_practice/practice/practice';
-fileID = fopen(fullfile(root,'x_diffusion'),'r');
-n=1;
-tline=fgetl(fileID);
-while ischar(tline)
-    C{n}=tline;
-    tline=fgetl(fileID);
-    n=n+1;
-end
-fclose(fileID);
-
-clear xdiff
-for i=1:n-1
-    xdiff(i,:)=str2num(C{i});
-end
-
-clear tline C
-fileID = fopen(fullfile(root,'y_diffusion'),'r');
-n=1;
-tline=fgetl(fileID);
-while ischar(tline)
-    C{n}=tline;
-    tline=fgetl(fileID);
-    n=n+1;
-end
-fclose(fileID);
-
-clear ydiff
-for i=1:n-1
-    ydiff(i,:)=str2num(C{i});
-end
-
-load('/Users/magda/Desktop/diffusion_simulation/generate_packing/generate_2d_packings_aboitiz/packing_aboitiz_rho76_g585.mat')
-close all
-figure;
-hold on
-for i=1:size(xdiff,2)
-    plot(xdiff(:,i),ydiff(:,i),'bo-','markersize',5)
-    plot(xdiff(1,i),ydiff(1,i),'m.','markersize',10)
-end
-viscircles([x,y],r,'linewidth',0.5); axis equal; xlim([0 1]); ylim([0 1]); box on;
-
-for i=1:size(xdiff,2)
-    m2(i,1)=sum((xdiff(:,i)-xdiff(1,i)).^2+(ydiff(:,i)-ydiff(1,i)).^2);
-end
-
-%%
-
-root='/Users/magda/Desktop/diffusion_simulation/cpp_practice/diffusion_myelin_exchange_ellipse_propagator/diffusion_myelin_exchange/';
-fileID = fopen(fullfile(root,'x_diffusion'),'r');
-n=1;
-tline=fgetl(fileID);
-while ischar(tline)
-    C{n}=tline;
-    tline=fgetl(fileID);
-    n=n+1;
-end
-fclose(fileID);
-
-clear xdiff
-for i=1:n-1
-    xdiff(i,:)=str2num(C{i});
-end
-
-clear tline C
-fileID = fopen(fullfile(root,'y_diffusion'),'r');
-n=1;
-tline=fgetl(fileID);
-while ischar(tline)
-    C{n}=tline;
-    tline=fgetl(fileID);
-    n=n+1;
-end
-fclose(fileID);
-
-clear ydiff
-for i=1:n-1
-    ydiff(i,:)=str2num(C{i});
-end
-
-load('/Users/magda/Desktop/diffusion_simulation/generate_packing/generate_2d_packings_aboitiz/packing_aboitiz_rho76_g585.mat')
-close all
-figure;
-hold on
-gratio=0.585;
-for i=-1:1
-    for j=-1:1
-        viscircles([x+i,y+j],r,'linewidth',0.5); axis equal; xlim([0 1]); ylim([0 1]); box on;
-        viscircles([x+i,y+j],r*gratio,'linewidth',0.5);
+% plot packing
+figure; set(gcf,'unit','inch','position',[0 0 12 5])
+subplot(121);
+for i = -1:1
+    for j = -1:1
+        viscircles([xc(:)+i,yc(:)+j],rc(:));
     end
 end
+xlim([0 1]); ylim([0 1])
+pbaspect([1 1 1]); box on
+title('Axon Packing','interpreter','latex','fontsize',20)
+set(gca,'xtick',[],'ytick',[])
 
-% axon_label=[371 213];
-% viscircles([x(axon_label),y(axon_label)],r(axon_label),'linewidth',0.5); axis equal; xlim([0 1]); ylim([0 1]); box on;
-% viscircles([x(axon_label),y(axon_label)],r(axon_label)*gratio,'linewidth',0.5); axis equal; xlim([0 1]); ylim([0 1]); box on;
+% plot lookup table
+subplot(122);
+cmap = colormap('parula');
+Nax = length(rc);               % # axon
+Ibg = A==0;                     % background region
+Iol = A>Nax;                    % two-axon region
+A2 = ceil(single(A)/Nax*64);    % rescale the colormap for # axons
+A2(Ibg) = 1;
+A2(Iol) = 1;
+[nx,ny] = size(A2);
+imgc = cmap(uint16(A2(:)),:);
+imgc(Ibg,:) = 0;                % background region is black
+imgc(Iol,:) = 1;                % two-axon region is white
+imgc = reshape(imgc,[nx,ny,3]);
 
-for i=1:size(xdiff,2)
-    plot(xdiff(:,i),ydiff(:,i),'bo-','markersize',5)
-    plot(xdiff(1,i),ydiff(1,i),'m.','markersize',10)
-    plot(xdiff(end,i),ydiff(end,i),'g.','markersize',10)
+image(rot90(imgc)); caxis([0 Nax]);
+box on; axis off
+title('Lookup Table','interpreter','latex','fontsize',20)
+
+%% Save files for C++ simulation code
+load(fullfile(target,'packing_parameter.mat'))
+load(fullfile(target,'lookup_table.mat'))
+
+fid = fopen(fullfile(target,'phantom_res.txt'),'w');
+fprintf(fid,'%f',res);
+fclose(fid);
+
+fid = fopen(fullfile(target,'phantom_NPix.txt'),'w');
+fprintf(fid,'%u',n);
+fclose(fid);
+
+fid = fopen(fullfile(target,'phantom_APix.txt'),'w');
+for i = 1:size(A,1)
+    fprintf(fid,'%u ',A(i,:));
+    fprintf(fid,'\n');
 end
+fclose(fid);
 
-for i=1:size(xdiff,2)
-    m2(i,1)=sum((xdiff(:,i)-xdiff(1,i)).^2+(ydiff(:,i)-ydiff(1,i)).^2);
-end
+fid = fopen(fullfile(target,'phantom_NAx.txt'),'w');
+fprintf(fid,'%u',length(rc));
+fclose(fid);
 
+fid = fopen(fullfile(target,'phantom_xCir.txt'),'w');
+fprintf(fid,'%f ',xc);
+fclose(fid);
+
+fid = fopen(fullfile(target,'phantom_yCir.txt'),'w');
+fprintf(fid,'%f ',yc);
+fclose(fid);
+
+fid = fopen(fullfile(target,'phantom_rCir.txt'),'w');
+fprintf(fid,'%f ',rc);
+fclose(fid);
+
+fid = fopen(fullfile(target,'phantom_Nmax.txt'),'w');
+fprintf(fid,'%u',Nmax);
+fclose(fid);
+
+fid = fopen(fullfile(target,'phantom_gratio.txt'),'w');
+fprintf(fid,'%f ',gratio);
+fclose(fid);
 

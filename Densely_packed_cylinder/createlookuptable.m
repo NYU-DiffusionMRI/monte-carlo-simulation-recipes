@@ -5,7 +5,7 @@ function [A,B,Nmax] = createlookuptable(n,xc,yc,r)
 %   Input:
 %   n: size of the lookup table = n x n
 %   xc, yc: center of cylinders, 0 <= xc,yc <= 1
-%   r: radius of cylinders
+%   r: outer radius of cylinders
 %
 %   Output:
 %   A: axon labels/lookup table

@@ -1,7 +1,7 @@
 int eventspercycle = 20;              // # events per sphere per cycle
 int N = 492;                        // number of spheres
 double initialpf = 0.01;              // initial packing fraction
-double maxpf = 0.6;                  // max packing fraction
+double maxpf = 0.76;                  // max packing fraction
 double temp = 0.2;                    // initial temp., use 0 for zero velocities
 double growthrate = 0.001;            // growth rate
 double maxpressure = 10000000;       // max pressure 
