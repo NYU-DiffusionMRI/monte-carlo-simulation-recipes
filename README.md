@@ -13,21 +13,21 @@ These are good exercises if you just start your own MC simulation codes.
 Some results can suprise you, even if you are well experienced!!
 
 ## References
-**Monte Carlo simulation**
-  -[Fieremans, et al., NMR Biomed, 2010](https://doi.org/10.1002/nbm.1577)
-  -[Novikov, et al., Nature Physics, 2011](https://doi.org/10.1038/nphys1936)
-  -[Fieremans and Lee, NeuroImage 2018](https://doi.org/10.1016/j.neuroimage.2018.06.046)
+* **Monte Carlo simulation**
+    -[Fieremans, et al., NMR Biomed, 2010](https://doi.org/10.1002/nbm.1577)
+    -[Novikov, et al., Nature Physics, 2011](https://doi.org/10.1038/nphys1936)
+    -[Fieremans and Lee, NeuroImage 2018](https://doi.org/10.1016/j.neuroimage.2018.06.046)
 
-**Random packing generation**
-  -[Donev, et al., J Comput Phys, 2005](https://doi.org/10.1016/j.jcp.2004.08.014)
+* **Random packing generation**
+    -[Donev, et al., J Comput Phys, 2005](https://doi.org/10.1016/j.jcp.2004.08.014)
 
-**Axonal diameter histogram in corpus callosum**
-  -[Aboitiz, et al., Brain Research, 1992](https://doi.org/10.1016/0006-8993(92)90178-C)
+* **Axonal diameter histogram in corpus callosum**
+    -[Aboitiz, et al., Brain Research, 1992](https://doi.org/10.1016/0006-8993(92)90178-C)
 
 ## Authors
-[Hong-Hsi Lee](http://www.diffusion-mri.com/people/hong-hsi-lee)
-[Dmitry S Novikov](http://www.diffusion-mri.com/people/dmitry-novikov)
-[Els Fieremans](http://www.diffusion-mri.com/people/els-fieremans)
+* [Hong-Hsi Lee](http://www.diffusion-mri.com/people/hong-hsi-lee)
+* [Dmitry S Novikov](http://www.diffusion-mri.com/people/dmitry-novikov)
+* [Els Fieremans](http://www.diffusion-mri.com/people/els-fieremans)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/leehhtw/monte-carlo-simulation-recipes/blob/example1/LICENSE) file for details
