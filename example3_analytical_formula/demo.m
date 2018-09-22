@@ -1,10 +1,9 @@
-% Els Fieremans, Hong-Hsi Lee, Physical and numerical phantoms for the
-% validation of brain microstructural MRI: A cookbook, NeuroImage 2018
+% This example demonstrates the consistency between the Monte Carlo
+% simulation and the knwon analytical formulas for impermeable
+% (non-)absorbing membranes, shown in Figure 4, point 3 in (Fieremans and
+% Lee, NeuroImage 2018), with more details in supplementary information.
 %
-% Supplementary Information: Recipes of MC simulations in Figure 4
-%
-% Example 3: Check against known analytical formulas for impermeable
-% (non-)absorbing membranes
+% Author: Hong-Hsi Lee, September, 2018 (orcid.org/0000-0002-3663-6559)
 
 % ********** Setup the directory on your computer **********
 root = 'your_directory_to_this_demo/example3_analytical_formula';

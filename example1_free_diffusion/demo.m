@@ -1,9 +1,8 @@
-% Els Fieremans, Hong-Hsi Lee, Physical and numerical phantoms for the
-% validation of brain microstructural MRI: A cookbook, NeuroImage 2018
+% This example demonstrates the free diffusion in 2d, shown in Figure 4,
+% point 1 in (Fieremans and Lee, NeuroImage 2018), with more details in
+% supplementary information.
 %
-% Supplementary Information: Recipes of MC simulations in Figure 4
-%
-% Example 1: Free diffusion in 2d (Figure 4, point 1)
+% Author: Hong-Hsi Lee, September, 2018 (orcid.org/0000-0002-3663-6559)
 
 clear
 

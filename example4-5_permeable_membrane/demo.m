@@ -1,9 +1,9 @@
-% Els Fieremans, Hong-Hsi Lee, Physical and numerical phantoms for the
-% validation of brain microstructural MRI: A cookbook, NeuroImage 2018
+% This example demonstrates how to calculate the permeability based on the
+% particle density and check against the input value, shown in Figure 4,
+% point 5 in (Fieremans and Lee, NeuroImage 2018), with more details in
+% supplementary information.
 %
-% Supplementary Information: Recipes of MC simulations in Figure 4
-%
-% Example 4-5: Permeable membrane
+% Author: Hong-Hsi Lee, September, 2018 (orcid.org/0000-0002-3663-6559)
 
 % ********** Setup the directory on your computer **********
 root = 'your_directory_to_this_demo/example4-5_permeable_membrane';
@@ -85,9 +85,10 @@ image(rot90(imgc)); caxis([0 Nax]);
 box on; axis off
 title('Lookup Table','interpreter','latex','fontsize',20)
 
-%% Run the simulation in the intra-cylindrical space in 2d
+%% Run the simulation in two coaxial permeable cylinders in 2d
 % Parameters are defined in the 'simParamInput.txt', and the # particle is
-% defined in main.cpp, line 50.
+% defined in main.cpp, line 50. The diffusion is initialized from the
+% cylindrical center.
 cd(fullfile(root,'cpp'))
 system('g++ -std=c++11 RNG.cpp diffusion_lib.cpp main.cpp -o my_code')
 system('./my_code')

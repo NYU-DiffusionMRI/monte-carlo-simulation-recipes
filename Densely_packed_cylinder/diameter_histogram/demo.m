@@ -1,5 +1,7 @@
 % Save and plot the histogram of inner axonal diameter in corpus callosum
-% based on Fig. 4 in (Aboitiz, et al., Brain Research, 1992, 598:143-153).
+% based on Fig. 4 in (Aboitiz, et al., Brain Research, 1992)
+%
+% Author: Hong-Hsi Lee, September, 2018 (orcid.org/0000-0002-3663-6559)
 
 filenames = {'genu.mat','body_anterior.mat','body_middle.mat','body_posterior.mat','splenium.mat'};
 roinames = {'GENU','ANT.BODY','MID.BODY','POST.BODY','SPLENIUM'};

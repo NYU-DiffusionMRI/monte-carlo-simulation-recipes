@@ -4,7 +4,7 @@ function [D,K] = sphereDK(r,D0,t,N)
 %   a sphere in radius r at diffusion time t. The intrinsic diffusivity
 %   inside the sphere is D0, and the number of summation terms is N.
 %
-% (c) Hong-Hsi Lee, September, 2018
+%   Author: Hong-Hsi Lee, September, 2018 (orcid.org/0000-0002-3663-6559)
 
 sbesselj = @(n,x) sqrt(pi/2./(x+eps)).*besselj(n+1/2,x);
 

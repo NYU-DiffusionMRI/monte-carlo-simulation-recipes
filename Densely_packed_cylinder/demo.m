@@ -1,17 +1,20 @@
-% Els Fieremans, Hong-Hsi Lee, Physical and numerical phantoms for the
-% validation of brain microstructural MRI: A cookbook, NeuroImage 2018
+% This example demonstrates how to generate a geometry composed of randomly
+% packed aligned cylinders, shown in Figure 4 in (Fieremans and Lee,
+% NeuroImage 2018)
 %
-% Randomly packed cylinders in Figure 4
+% "spheres_poly"
+% Packing geometry is generated as in (Donev, et al., J Comput Phys, 2005).
 %
-% The axonal diameter histogram in corpus callosum is based on Fig. 4 in
-% (Aboitiz, et al., Brain Research, 1992, 598:143-153)
-%
-% The fiber packing algorithm is Donev's work in (Donev, et al., J. Comput.
-% Phys., 2005, 202:737-764)
+% "diameter_histogram"
+% Axonal diameter histogram in corpus callosum comes from (Aboitiz, et al.,
+% Brain Research, 1992)
 %
 % ATTENTION: The value of cylindrical volume fraction can be slightly
-% different from the input. The actual value needs to be recalcualted based
-% on the output packing.
+% different from the input. The actual value needs to be re-calcualted
+% based on the output packing.
+%
+% Author: Hong-Hsi Lee, September, 2018 (orcid.org/0000-0002-3663-6559)
+%         Lauren M Burcaw, 2014
 
 % ********** Setup the directory on your computer **********
 root = 'your_directory_to_this_demo/Densely_packed_cylinder';

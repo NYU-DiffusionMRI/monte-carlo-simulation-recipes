@@ -12,7 +12,8 @@ function [A,B,Nmax] = createlookuptable(n,xc,yc,r)
 %   B: # axon in each pixel
 %   Nmax: the smallest integer larger than # axon, in the base of 10
 %
-% (c) Hong-Hsi Lee, 2016
+%   Author: Hong-Hsi Lee, 2016 (orcid.org/0000-0002-3663-6559)
+%           Lauren M Burcaw, 2014
 
 MSX = n;
 MSY = n;
@@ -66,7 +67,7 @@ function inside = inside_circle(ii,jj,xc,yc,r,n)
 %   with the circle (xc,yc,r), otherwise, return 0. The size of the lookup
 %   table is n x n.
 %
-% (c) Hong-Hsi Lee, 2016
+%   Author: Hong-Hsi Lee, 2016 (orcid.org/0000-0002-3663-6559)
 
     v1 = ((ii-xc*n)^2+(jj-yc*n)^2) <= (r*n)^2;
     v2 = ((ii-1-xc*n)^2+(jj-yc*n)^2) <= (r*n)^2;

@@ -1,10 +1,9 @@
-% Els Fieremans, Hong-Hsi Lee, Physical and numerical phantoms for the
-% validation of brain microstructural MRI: A cookbook, NeuroImage 2018
+% This example demonstrates the short-time limit of diffusion in
+% extra-cylindrical space of randomly packed impermeable cylinders in 2d,
+% shown in Figure 4, point 2 in (Fieremans and Lee, NeuroImage 2018), with
+% more details in supplementary information.
 %
-% Supplementary Information: Recipes of MC simulations in Figure 4
-%
-% Example 2: Check short-time limit: Diffusion in extra-cylindrical space
-%   of randomly packed impermeable cylinders in 2d
+% Author: Hong-Hsi Lee, September, 2018 (orcid.org/0000-0002-3663-6559)
 
 % ********** Setup the directory on your computer **********
 root = 'your_directory_to_this_demo/example2_short_time_limit';

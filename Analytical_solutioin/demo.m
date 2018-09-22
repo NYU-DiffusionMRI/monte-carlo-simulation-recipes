@@ -1,12 +1,16 @@
-% Els Fieremans, Hong-Hsi Lee, Physical and numerical phantoms for the
-% validation of brain microstructural MRI: A cookbook, NeuroImage 2018
+% This example demonstrates the analytical solutions of diffusivity and
+% kurtosis time-dependence
 %
-% Appendix E. Analytical solutions for the diffusion time-dependence in
-% specific geometries
+% 1. between two parallel planes,
+% 2. inside a cylinder, and
+% 3. inside a sphere,
 %
-% 1. Between two parallel planes
-% 2. Inside a cylinder
-% 3. Inside a sphere
+% with impermeable membranes, based on
+%
+% Appendix E. Analytical solutions for the diffusion time-dependence in 
+% specific geometries in (Fieremans and Lee, NeuroImage 2018).
+%
+% Author: Hong-Hsi Lee, September, 2018 (orcid.org/0000-0002-3663-6559)
 
 %% Between two parallel planes
 

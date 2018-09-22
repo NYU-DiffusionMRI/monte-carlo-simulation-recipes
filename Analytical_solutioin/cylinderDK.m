@@ -5,7 +5,7 @@ function [RD,RK] = cylinderDK(r,D0,t,N)
 %   intrinsic diffusivity inside the cylinder is D0, and the number of
 %   summation terms is N.
 %
-% (c) Hong-Hsi Lee, September, 2018
+%   Author: Hong-Hsi Lee, September, 2018 (orcid.org/0000-0002-3663-6559)
 
 dJ0 = @(x) -besselj(1,x);
 beta0k = @(k) fzero(dJ0, [(k-1)*pi, k*pi]); 

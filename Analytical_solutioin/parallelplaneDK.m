@@ -5,7 +5,7 @@ function [D,K] = parallelplaneDK(d,D0,t,N)
 %   intrinsic diffusivity between the planes is D0, and the number of
 %   summation terms is N.
 %
-% (c) Hong-Hsi Lee, September, 2018
+%   Author: Hong-Hsi Lee, September, 2018 (orcid.org/0000-0002-3663-6559)
 
 a = d/2;
 
