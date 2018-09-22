@@ -1,6 +1,6 @@
 # Recipes of Monte Carlo simulations
 
-The code re-implements 2d Monte Carlo simulations originally developed in [Fieremans, et al., NMR Biomed, 2010](https://doi.org/10.1002/nbm.1577) and [Novikov, et al., Nature Physics, 2011](https://doi.org/10.1038/nphys1936), illustrating the examples in Figure 4 of [Fieremans and Lee, NeuroImage 2018](https://doi.org/10.1016/j.neuroimage.2018.06.046) with more details in Supplmentary Information.
+The code re-implements 2d Monte Carlo simulations originally developed in [Fieremans, et al., NMR Biomed, 2010](https://doi.org/10.1002/nbm.1577) and [Novikov, et al., Nature Physics, 2011](https://doi.org/10.1038/nphys1936), illustrating the examples in Figure 4 of [Fieremans and Lee, NeuroImage 2018](https://doi.org/10.1016/j.neuroimage.2018.06.046) with more details in supplmentary information.
 
 * **Example 1 (Figure 4, point 1):** Free diffusion in 2d
 * **Example 2 (Figure 4, point 2):** Check short-time limit of diffusion in a geometry composed of randomly packed impermeable cylinders (2d)
