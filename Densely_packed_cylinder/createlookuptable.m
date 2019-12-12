@@ -20,7 +20,7 @@ MSY = n;
 A = zeros(MSX,MSY);
 B = zeros(MSX,MSY);
 N = length(r);
-Nmax = 10^(ceil(log10(N)));
+Nmax = 10^(ceil(log10(N+1)));
 
 for i = 1:size(r,1)
     for ii = ceil((xc(i)-r(i))*n):ceil((xc(i)+r(i))*n)
