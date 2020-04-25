@@ -69,10 +69,16 @@ function inside = inside_circle(ii,jj,xc,yc,r,n)
 %
 %   Author: Hong-Hsi Lee, 2016 (orcid.org/0000-0002-3663-6559)
 
-    v1 = ((ii-xc*n)^2+(jj-yc*n)^2) <= (r*n)^2;
-    v2 = ((ii-1-xc*n)^2+(jj-yc*n)^2) <= (r*n)^2;
-    v3 = ((ii-xc*n)^2+(jj-1-yc*n)^2) <= (r*n)^2;
-    v4 = ((ii-1-xc*n)^2+(jj-1-yc*n)^2) <= (r*n)^2;
+    x = max( ii-1, min(xc*n,ii) );
+    y = max( jj-1, min(yc*n,jj) );
+
+    d2 = (x-xc*n)^2 + (y-yc*n)^2;
+    inside = d2 < (r*n)^2;
     
-    inside = ( (v1+v2+v3+v4) >0 );
+%     v1 = ((ii-xc*n)^2+(jj-yc*n)^2) <= (r*n)^2;
+%     v2 = ((ii-1-xc*n)^2+(jj-yc*n)^2) <= (r*n)^2;
+%     v3 = ((ii-xc*n)^2+(jj-1-yc*n)^2) <= (r*n)^2;
+%     v4 = ((ii-1-xc*n)^2+(jj-1-yc*n)^2) <= (r*n)^2;
+%     
+%     inside = ( (v1+v2+v3+v4) >0 );
 end
